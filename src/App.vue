@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <BudgetList />
+    <BudgetList :list="list"/>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
         comment: 'Some outcome comment',
         id: 2,
       }
-    }
+    },
   }),
 }
 </script>
