@@ -1,15 +1,18 @@
 <template>
   <div id="app">
+    <TotalBalance :total="totalBalance" />
     <BudgetList :list="list"/>
   </div>
 </template>
 
 <script>
 import BudgetList from '@/components/BudgetList';
+import TotalBalance from '@/components/TotalBalance';
 export default {
   name: 'App',
   components: {
     BudgetList,
+    TotalBalance,
   },
   data: () => ({
     list: {
@@ -27,6 +30,14 @@ export default {
       }
     },
   }),
+  computed: {
+    totalBalance() {
+      let balance = Object.values(this.list).reduce(function(sum, el) {
+        return sum + el.value
+      }, 0);
+      return balance
+    },
+  },
 }
 </script>
 
