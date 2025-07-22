@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <FormBudget />
     <TotalBalance :total="totalBalance" />
     <BudgetList :list="list" @deleteItem="onDelete" />
   </div>
@@ -8,11 +9,13 @@
 <script>
 import BudgetList from '@/components/BudgetList';
 import TotalBalance from '@/components/TotalBalance';
+import FormBudget from '@/components/FormBudget';
 export default {
   name: 'App',
   components: {
     BudgetList,
     TotalBalance,
+    FormBudget,
   },
   data: () => ({
     list: {
