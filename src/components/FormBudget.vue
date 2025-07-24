@@ -1,6 +1,6 @@
 <template>
   <ElCard class="form-card">
-    <ElForm :model='formData'>
+    <ElForm :model='formData' :rules='rules'>
       <ElFormItem label="Type" prop="type">
         <ElSelect class="type-select" v-model="formData.type" placeholder="chose type...">
           <ElOption label="Income" value="INCOME" />
@@ -13,7 +13,7 @@
       <ElFormItem label="Value" prop="value">
         <ElInput v-model.number="formData.value" />
       </ElFormItem>
-      <ElButton type="primary" @click.prevent="onSubmit">Submit</ElButton>
+      <ElButton type="primary" @click="onSubmit">Submit</ElButton>
     </ElForm>
   </ElCard>
 </template>
@@ -26,6 +26,18 @@ export default {
       type: 'INCOME',
       comment: '',
       value: 0,
+    },
+    rules: {
+      type: [
+        { required: true, message: 'Please select type', trigger: 'blur' }
+      ],
+      comment: [
+        { required: true, message: 'Please input some comment', trigger: 'blur' },
+      ],
+      value: [
+        { required: true, message: 'Please inpute value', trigger: 'blur' },
+        { type: 'number', message: 'Please input number', trigger: 'change' },
+      ],
     },
   }),
   methods: {
