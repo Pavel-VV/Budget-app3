@@ -44,13 +44,19 @@ export default {
     onSubmit() {
       this.$refs.addItemForm.validate((valid)=>{
         if(valid) {
+          this.valueOutcom();
           this.$emit('addNewItem', {...this.formData});
           this.$refs.addItemForm.resetFields();
-          console.log(this.formData);
         }
       });
     },
-  }
+    valueOutcom() {
+      if (this.formData.type === 'OUTCOME' && this.formData.value > 0) {
+        this.formData.value = Number(`-${this.formData.value}`);
+        console.log(this.formData.value);
+      }
+    }
+  },
 }
 </script>
 
