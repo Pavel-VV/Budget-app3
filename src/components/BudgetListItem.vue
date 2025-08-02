@@ -1,8 +1,9 @@
 <template>
   <div class="list-item">
     <span class="budget-comment">{{ item.comment }}</span>
-    <span class="budget-value">{{ item.value }}</span>
-    <ElButton type="danger" size="mini" @click="deleteItem(item.id)">Delete</ElButton>
+    <span class="budget-value" :style=colorValue >{{ item.value }}</span>
+    <i :class='iconObject' class="icon-item"></i>
+    <ElButton class="button-item" type="danger" size="mini" @click="deleteItem(item.id)">Delete</ElButton>
   </div>
 </template>
 
@@ -22,6 +23,20 @@
         }
       },
     },
+    computed: {
+      valueIsPositive() {
+        return this.item.value > 0 ? true : false;
+      },
+      iconObject() {
+        return {
+          "el-icon-top": this.valueIsPositive,
+          "el-icon-bottom": !this.valueIsPositive,
+        };
+      },
+      colorValue() {
+        return this.valueIsPositive ? 'color:green' : 'color:red';
+      }
+    },
   }
 </script>
 
@@ -36,5 +51,9 @@
     font-weight: 600;
     margin-left: auto;
     margin-right: 20px;
+  }
+
+  .button-item {
+    margin-left: 5px;
   }
 </style>
