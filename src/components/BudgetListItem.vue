@@ -17,7 +17,9 @@
     },
     methods: {
       deleteItem(id) {
-        this.$emit('deleteItemToList', id);
+        if(confirm('Вы точно хотите удалить запись ?')) {
+          this.$emit('deleteItemToList', id);
+        }
       },
     },
   }
