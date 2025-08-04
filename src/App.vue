@@ -2,7 +2,8 @@
   <div id="app">
     <FormBudget @addNewItem="onNewItem" />
     <TotalBalance :total="totalBalance" />
-    <BudgetList :list="list" @deleteItem="onDelete" />
+    <BudgetSort @sortList="onSortList" />
+    <BudgetList :list="sortListBudget" @deleteItem="onDelete" />
   </div>
 </template>
 
@@ -10,12 +11,14 @@
 import BudgetList from '@/components/BudgetList';
 import TotalBalance from '@/components/TotalBalance';
 import FormBudget from '@/components/FormBudget';
+import BudgetSort from '@/components/BudgetSort';
 export default {
   name: 'App',
   components: {
     BudgetList,
     TotalBalance,
     FormBudget,
+    BudgetSort,
   },
   data: () => ({
     list: {
@@ -32,6 +35,7 @@ export default {
         id: 2,
       }
     },
+    sortList: null,
   }),
   computed: {
     totalBalance() {
@@ -40,6 +44,14 @@ export default {
       }, 0);
       return balance
     },
+    sortListBudget() {
+      let list = {...this.list};
+      if(this.sortList !== null) list = this.sortList;
+      return list;
+    },
+  },
+  watch: {
+    list: "onSortList",
   },
   methods: {
     onDelete(id) {
@@ -48,7 +60,17 @@ export default {
     onNewItem(item) {
       const newObj = {...item, id: String(Math.random())}
       this.$set(this.list, newObj.id, newObj);
-    }
+    },
+    onSortList(type = "ALL") {
+      console.log(this.list);
+      let sortList = Object.values(this.list).reduce((list, item)=>{
+        if(item.type === type) {
+          list[item.id] = item;
+        } else if (type === 'ALL') list[item.id] = item;
+        return list
+      }, {})
+      this.sortList = sortList;
+    },
   }
 }
 </script>
