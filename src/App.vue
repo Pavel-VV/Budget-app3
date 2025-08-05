@@ -35,7 +35,8 @@ export default {
         id: 2,
       }
     },
-    sortList: null,
+    dataType: 'ALL',
+    sortedList: null,
   }),
   computed: {
     totalBalance() {
@@ -46,12 +47,12 @@ export default {
     },
     sortListBudget() {
       let list = {...this.list};
-      if(this.sortList !== null) list = this.sortList;
+      if(this.sortedList !== null) list = this.sortedList;
       return list;
     },
   },
   watch: {
-    list: "onSortList",
+    list: "sortList",
   },
   methods: {
     onDelete(id) {
@@ -61,15 +62,19 @@ export default {
       const newObj = {...item, id: String(Math.random())}
       this.$set(this.list, newObj.id, newObj);
     },
-    onSortList(type = "ALL") {
-      console.log(this.list);
-      let sortList = Object.values(this.list).reduce((list, item)=>{
+    sortList() {
+      let type = this.dataType;
+      let sortedList = Object.values(this.list).reduce((list, item)=>{
         if(item.type === type) {
           list[item.id] = item;
         } else if (type === 'ALL') list[item.id] = item;
-        return list
-      }, {})
-      this.sortList = sortList;
+        return list;
+      }, {});
+      this.sortedList = sortedList;
+    },
+    onSortList(type = "ALL") {
+      this.dataType = type;
+      this.sortList();
     },
   }
 }
