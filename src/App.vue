@@ -64,7 +64,7 @@ export default {
     },
     sortList() {
       let type = this.dataType;
-      let sortedList = Object.values(this.list).reduce((list, item)=>{
+      let sortedList = Object.values(this.list).reduce((list, item) => {
         if(item.type === type) {
           list[item.id] = item;
         } else if (type === 'ALL') list[item.id] = item;

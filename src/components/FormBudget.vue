@@ -21,7 +21,13 @@
 <script>
 export default {
   name: 'FormBudget',
-  data: ()=>({
+  data: ()=> {
+    let validateValue = (rule, value, callback) => {
+      if(value === 0) {
+        callback(new Error('Please inpute value don`t "0"'));
+      } else callback();
+    };
+    return {
     formData: {
       type: 'INCOME',
       comment: '',
@@ -37,9 +43,10 @@ export default {
       value: [
         { required: true, message: 'Please inpute value', trigger: 'blur' },
         { type: 'number', message: 'Please input number', trigger: 'change' },
+        {validator: validateValue, triger: '<blur></blur>'},
       ],
     },
-  }),
+  }},
   methods: {
     onSubmit() {
       this.$refs.addItemForm.validate((valid)=>{
@@ -54,7 +61,12 @@ export default {
       if (this.formData.type === 'OUTCOME' && this.formData.value > 0) {
         this.formData.value = Number(`-${this.formData.value}`);
       }
-    }
+    },
+    // validateValue(rule, value, callback) {
+    //   if(value === 0) {
+    //     callback(new Error('Please inpute value don`t "0"'));
+    //   } else callback();
+    // },
   },
 }
 </script>
